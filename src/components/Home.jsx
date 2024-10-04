@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToKeeper, updateToKeeper } from '../features/keeper/keeperSlice';
+import toast from 'react-hot-toast';
 
 const Home = () => {
     const [title, setTitle] = useState('');
@@ -23,16 +24,22 @@ const Home = () => {
 
         if (!keeperId) {
             // create new keeper
-            dispatch(addToKeeper(keeper));
+            if (title && content) {
+                dispatch(addToKeeper(keeper));
+            } else {
+                toast.error('Please fill all the details');
+            }
         } else {
             // update keeper
             dispatch(updateToKeeper(keeper));
         }
 
         // after create or update
-        setTitle('');
-        setContent('');
-        setSearchParams({});
+        if (title && content) {
+            setTitle('');
+            setContent('');
+            setSearchParams({});
+        }
 
     }
 
