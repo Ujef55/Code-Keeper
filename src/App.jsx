@@ -5,7 +5,6 @@ import SingleKeeperNote from './components/SingleKeeperNote';
 import Navbar from './components/Navbar';
 import AllKeeperNotes from './components/AllKeeperNotes';
 
-
 const routes = createBrowserRouter([
   {
     path: '/',

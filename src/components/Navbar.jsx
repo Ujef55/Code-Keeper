@@ -1,9 +1,35 @@
-import React from 'react'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
     return (
-        <div>This is navbar</div>
-    )
-}
+        <nav className="bg-[#1e1e1e] text-gray-300 p-1 flex flex-wrap items-center justify-between text-xs sm:text-sm font-mono">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+                <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                        `px-1 sm:px-2 py-0.5 hover:bg-[#2d2d2d] ${isActive ? 'bg-[#2d2d2d]' : ''
+                        }`
+                    }
+                >
+                    [Home]
+                </NavLink>
+                <NavLink
+                    to="/keeper"
+                    className={({ isActive }) =>
+                        `px-1 sm:px-2 py-0.5 hover:bg-[#2d2d2d] ${isActive ? 'bg-[#2d2d2d]' : ''
+                        }`
+                    }
+                >
+                    [Keeper]
+                </NavLink>
+            </div>
 
-export default Navbar
+            <div className="flex items-center space-x-2 sm:space-x-4 text-[10px] sm:text-sm">
+                <span className="px-1 sm:px-2 py-0.5">[theme:light]</span>
+            </div>
+        </nav>
+    );
+};
+
+export default Navbar;

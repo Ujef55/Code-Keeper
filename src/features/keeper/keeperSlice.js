@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import toast from 'react-hot-toast';
 
 const initialState = {
     keeper: localStorage.getItem('keeper') ? JSON.parse(localStorage.getItem('keeper')) : []
@@ -9,16 +10,20 @@ export const keeperSlice = createSlice({
     initialState,
     reducers: {
         addToKeeper: (state, action) => {
-            state.value += 1
+            const keeper = action.payload;
+            state.keeper.push(keeper);
+            localStorage.setItem('keeper', JSON.stringify(state.keeper));
+            toast.success('Keeper created successfully');
+            console.log(initialState);
         },
         updateToKeeper: (state) => {
-            state.value -= 1
+
         },
         resetKeeper: (state, action) => {
-            state.value += action.payload
+
         },
         removeFromKeeper: (state) => {
-            state.value -= 1
+
         }
     },
 })
