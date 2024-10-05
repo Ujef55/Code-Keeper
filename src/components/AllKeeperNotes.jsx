@@ -1,10 +1,13 @@
 import React from 'react'
 import { useState, useMemo } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Search, Terminal } from 'lucide-react';
+import { resetKeeper } from '../features/keeper/keeperSlice';
+
 
 
 const AllKeeperNotes = () => {
+    const dispatch = useDispatch();
 
     const [searchTerm, setSearchTearm] = useState('');
 
@@ -13,6 +16,10 @@ const AllKeeperNotes = () => {
 
     function handleChangeInput(e) {
         setSearchTearm(e.target.value);
+    }
+
+    function removeAllKeeper() {
+        dispatch(resetKeeper());
     }
 
     const filteredData = useMemo(() =>
@@ -33,8 +40,12 @@ const AllKeeperNotes = () => {
                     <span className="text-blue-400">keeper</span>
                     <span className="text-gray-600">→</span>
                     <span className="text-green-400">list</span>
-                    <span className="text-gray-600 ml-2 text-xs">(showing {keepers.length} snippets)</span>
+                    <span className="text-gray-600 ml-2 text-xs">(showing {filteredData.length} snippets)</span>
                 </div>
+
+                <button onClick={removeAllKeeper} className="px-2 py-0.5 text-xs mb-8 text-red-400 hover:bg-red-900/30 hover:text-red-300 rounded transition-colors duration-150">
+                    [Remove All]
+                </button>
 
                 <div className="flex items-center space-x-2 bg-[#1E1E1E] p-3 mb-3 rounded-md border border-[#333333] shadow-lg font-mono">
                     <Terminal className="text-green-500" size={18} />
@@ -65,7 +76,10 @@ const AllKeeperNotes = () => {
                             {/* Snippet Content */}
                             <div className="relative">
                                 <pre className="text-gray-300 text-sm p-3 pl-16 overflow-x-auto">
-                                    <code>{keeper.content}</code>
+                                    <code>{keeper.content.length > 20
+                                        ? `${keeper.content.slice(0, 20).trim()}...`
+                                        : keeper.content
+                                    }</code>
                                 </pre>
                             </div>
 

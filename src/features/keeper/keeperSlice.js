@@ -20,7 +20,9 @@ export const keeperSlice = createSlice({
 
         },
         resetKeeper: (state, action) => {
-
+            state.keeper = [];
+            localStorage.setItem('keeper', JSON.stringify(state.keeper));
+            toast.success('All your keepers are removed');
         },
         removeFromKeeper: (state) => {
 
