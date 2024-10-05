@@ -1,10 +1,29 @@
 import React from 'react'
+import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux'
+import { Search, Terminal } from 'lucide-react';
+
 
 const AllKeeperNotes = () => {
 
+    const [searchTerm, setSearchTearm] = useState('');
+
     const keepers = useSelector((state) => state.keeper);
     console.log(keepers);
+
+    function handleChangeInput(e) {
+        setSearchTearm(e.target.value);
+    }
+
+    const filteredData = useMemo(() =>
+        keepers.keeper.filter((keeper) =>
+            keeper.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            keeper.content.toLowerCase().includes(searchTerm.toLowerCase())
+        ),
+        [keepers.keeper, searchTerm]
+    );
+
+    console.log(filteredData);
 
     return (
         <div className="p-2 sm:p-4 font-mono min-h-screen">
@@ -17,8 +36,20 @@ const AllKeeperNotes = () => {
                     <span className="text-gray-600 ml-2 text-xs">(showing {keepers.length} snippets)</span>
                 </div>
 
+                <div className="flex items-center space-x-2 bg-[#1E1E1E] p-3 mb-3 rounded-md border border-[#333333] shadow-lg font-mono">
+                    <Terminal className="text-green-500" size={18} />
+                    <input
+                        type="text"
+                        className="w-full bg-transparent text-gray-300 outline-none placeholder-gray-500"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={handleChangeInput}
+                    />
+                    <Search className="text-gray-500 cursor-pointer" size={18} />
+                </div>
+
                 <div className="space-y-4">
-                    {keepers.keeper.map((keeper) => (
+                    {filteredData.map((keeper) => (
                         <div key={keeper.id} className="border border-[#333] bg-[#1e1e1e]">
                             {/* Snippet Header */}
                             <div className="flex flex-wrap items-center justify-between bg-[#252525] px-3 py-2 border-b border-[#333]">
@@ -63,7 +94,7 @@ const AllKeeperNotes = () => {
                     ))}
                 </div>
 
-                {keepers.length === 0 && (
+                {filteredData.length === 0 && (
                     <div className="text-gray-500 text-sm bg-[#1e1e1e] p-4 border border-[#333]">
                         $ No snippets found. Create one to get started.
                     </div>
