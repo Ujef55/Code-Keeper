@@ -52,13 +52,14 @@ const Home = () => {
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Enter keeper title..."
                     className="w-full sm:flex-grow bg-[#2d2d2d] text-gray-300 
-                             px-2 sm:px-3 py-1 text-sm sm:text-base
+                             sm:px-3 pt-[10px] text-sm sm:text-base items-center
                              border border-[#3d3d3d] focus:border-[#4d4d4d]
                              outline-none placeholder-gray-500"
                 />
+
                 <button
                     className="w-full sm:w-auto bg-[#2d2d2d] text-gray-300 
-                             px-2 sm:px-3 py-1 text-sm sm:text-base
+                             pt-[10px] sm:px-3 text-sm sm:text-base items-center
                              border border-[#3d3d3d] hover:bg-[#3d3d3d]
                              focus:outline-none focus:border-[#4d4d4d]
                              disabled:opacity-50 disabled:cursor-not-allowed
