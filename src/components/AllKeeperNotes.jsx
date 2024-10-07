@@ -2,7 +2,9 @@ import React from 'react'
 import { useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Search, Terminal } from 'lucide-react';
-import { resetKeeper } from '../features/keeper/keeperSlice';
+import { resetKeeper, removeFromKeeper, copyToClipBoard } from '../features/keeper/keeperSlice';
+import { NavLink } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 
 
@@ -12,14 +14,31 @@ const AllKeeperNotes = () => {
     const [searchTerm, setSearchTearm] = useState('');
 
     const keepers = useSelector((state) => state.keeper);
-    console.log(keepers);
 
     function handleChangeInput(e) {
         setSearchTearm(e.target.value);
     }
 
+    // for copy content to clipboard
+    function copy(content) {
+        dispatch(copyToClipBoard(content));
+    }
+
+    // for copy share link
+    function copyLink(keeperId) {
+        const baseURL = window.location.origin;
+        const keeperURL = `${baseURL}/keeper/${keeperId}`;
+        navigator.clipboard.writeText(keeperURL)
+        toast.success('Link copied');
+    }
+
     function removeAllKeeper() {
         dispatch(resetKeeper());
+    }
+
+    function removeSingleKeeper(keeperId) {
+        dispatch(removeFromKeeper(keeperId));
+        // console.log(keeperId);
     }
 
     const filteredData = useMemo(() =>
@@ -30,7 +49,6 @@ const AllKeeperNotes = () => {
         [keepers.keeper, searchTerm]
     );
 
-    console.log(filteredData);
 
     return (
         <div className="p-2 sm:p-4 font-mono min-h-screen">
@@ -86,21 +104,21 @@ const AllKeeperNotes = () => {
                             {/* Action Buttons */}
                             <div className="flex flex-wrap justify-end gap-1 px-2 py-1.5 bg-[#252525] border-t border-[#333]">
                                 <button
-                                    onClick={() => copyToClipboard(keeper.content)}
+                                    onClick={() => copy(keeper.content)}
                                     className="px-2 py-0.5 text-xs text-gray-400 hover:bg-[#333] hover:text-gray-200 rounded transition-colors duration-150"
                                 >
                                     [copy]
                                 </button>
-                                <button className="px-2 py-0.5 text-xs text-gray-400 hover:bg-[#333] hover:text-gray-200 rounded transition-colors duration-150">
+                                <NavLink to={`/?keeperId=${keeper?.id}`} className="px-2 py-0.5 text-xs text-gray-400 hover:bg-[#333] hover:text-gray-200 rounded transition-colors duration-150">
                                     [edit]
-                                </button>
-                                <button className="px-2 py-0.5 text-xs text-gray-400 hover:bg-[#333] hover:text-gray-200 rounded transition-colors duration-150">
+                                </NavLink>
+                                <NavLink to={`/keeper/${keeper?.id}`} className="px-2 py-0.5 text-xs text-gray-400 hover:bg-[#333] hover:text-gray-200 rounded transition-colors duration-150">
                                     [view]
+                                </NavLink>
+                                <button onClick={() => copyLink(keeper.id)} className="px-2 py-0.5 text-xs text-gray-400 hover:bg-[#333] hover:text-gray-200 rounded transition-colors duration-150">
+                                    [copy link]
                                 </button>
-                                <button className="px-2 py-0.5 text-xs text-gray-400 hover:bg-[#333] hover:text-gray-200 rounded transition-colors duration-150">
-                                    [share]
-                                </button>
-                                <button className="px-2 py-0.5 text-xs text-red-400 hover:bg-red-900/30 hover:text-red-300 rounded transition-colors duration-150">
+                                <button onClick={() => removeSingleKeeper(keeper.id)} className="px-2 py-0.5 text-xs text-red-400 hover:bg-red-900/30 hover:text-red-300 rounded transition-colors duration-150">
                                     [delete]
                                 </button>
                             </div>

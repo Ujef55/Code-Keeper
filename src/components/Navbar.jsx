@@ -24,10 +24,6 @@ const Navbar = () => {
                     [Keeper]
                 </NavLink>
             </div>
-
-            <div className="flex items-center space-x-2 sm:space-x-4 text-[10px] sm:text-sm">
-                <span className="px-1 sm:px-2 py-0.5">[theme:Dark]</span>
-            </div>
         </nav>
     );
 };

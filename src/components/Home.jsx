@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToKeeper, updateToKeeper } from '../features/keeper/keeperSlice';
 import toast from 'react-hot-toast';
 
@@ -9,6 +9,17 @@ const Home = () => {
     const [content, setContent] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
     const keeperId = searchParams.get('keeperId');
+
+    const allkeepers = useSelector((state) => state.keeper);
+
+    useEffect(() => {
+        if (keeperId) {
+            const editableKeeper = allkeepers.keeper.find((keeper) => keeper.id === keeperId);
+            setTitle(editableKeeper.title);
+            setContent(editableKeeper.content);
+        }
+    }, [keeperId])
+
 
     const lineNumbers = content.split('\n').length;
 
@@ -42,6 +53,15 @@ const Home = () => {
         }
 
     }
+
+    // console.log("URL keeperId:", keeperId);
+    // const keepers = useSelector((state) => state.keeper);
+    // console.log("Redux state:", keepers);
+    // console.log("keeperId from URL:", keeperId);
+
+    // useEffect(() => {
+    //     console.log("searchParams:", Object.fromEntries(searchParams));
+    // }, [searchParams]);
 
     return (
         <div className="p-2 sm:p-4 font-mono max-w-4xl mx-auto">
