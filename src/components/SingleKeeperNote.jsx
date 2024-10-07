@@ -36,7 +36,7 @@ const singleKeeperNote = () => {
         <button
           onClick={() => copy(filteredData.content)}
           className="w-full sm:w-auto bg-[#2d2d2d] text-gray-300 
-                     pt-[10px] sm:px-3 text-sm sm:text-base items-center
+                     sm:px-3 text-sm sm:text-base items-center
                      border border-[#3d3d3d] hover:bg-[#3d3d3d]
                      focus:outline-none focus:border-[#4d4d4d]
                      disabled:opacity-50 disabled:cursor-not-allowed
