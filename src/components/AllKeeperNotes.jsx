@@ -53,7 +53,7 @@ const AllKeeperNotes = () => {
     return (
         <div className="p-2 sm:p-4 font-mono min-h-screen">
             <div className="max-w-4xl mx-auto">
-                <div className="flex items-center pt-[10px] px-2 space-x-2 text-sm mb-6 bg-[#252525] rounded">
+                <div className="flex items-center p-2 px-2 space-x-2 text-sm mb-6 bg-[#252525] rounded">
                     <span className="text-yellow-600">~/</span>
                     <span className="text-blue-400">keeper</span>
                     <span className="text-gray-600">→</span>
@@ -69,7 +69,7 @@ const AllKeeperNotes = () => {
                     <Terminal className="text-green-500" size={18} />
                     <input
                         type="text"
-                        className="w-full pt-[10px] bg-transparent text-gray-300 outline-none placeholder-gray-500"
+                        className="w-full bg-transparent text-gray-300 outline-none placeholder-gray-500"
                         placeholder="Search..."
                         value={searchTerm}
                         onChange={handleChangeInput}
