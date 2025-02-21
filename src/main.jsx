@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { Toaster } from 'react-hot-toast'
 
 
-createRoot(document.getEle('root')).render(
+createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <Toaster />
